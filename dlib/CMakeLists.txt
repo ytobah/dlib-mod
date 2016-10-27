@@ -11,6 +11,7 @@ project(dlib)
 include(cmake_utils/release_build_by_default)
 include(cmake_utils/use_cpp_11.cmake)
 
+#Change this line to the proper directories
 include_directories(/home/ytobah/simple_apx_app/inc/BookKeeping /home/ytobah/simple_apx_app/inc/OperatorHeaders) # ${PNG_INCLUDE_DIR} external/libpng external/zlib ${cudnn_include}  ${sqlite_path2} ${fftw_path})  #adding the include folder
 
 set(CPACK_PACKAGE_VERSION_MAJOR "19")
