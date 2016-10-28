@@ -3,15 +3,32 @@
 # information about it at http://www.cmake.org
 #
 
+set_property(GLOBAL PROPERTY RULE_MESSAGES OFF)
 
 cmake_minimum_required(VERSION 2.8.4)
 
 PROJECT(examples)
 
-include(../dlib/cmake)
+include_directories(../../simple_apx_app/inc/BookKeeping ../../simple_apx_app/inc/OperatorHeaders)  #adding the include folder
+file(GLOB all_src2 "../../simple_apx_app/src/Operators/*.cpp")
+file(GLOB all_src3  "../../simple_apx_app/src/BookKeeping/*.cpp") #includes all the files in the folder src/
+add_executable(svm_c_ex_2 ${all_src2} ${all_src3} svm_c_ex.cpp) #which files to build
+#install(TARGETS tool_exe DESTINATION bin) #where to place the binary
+TARGET_LINK_LIBRARIES(svm_c_ex_2 dlib )
+add_executable(multiclass_classification_ex_2 ${all_src2} ${all_src3} multiclass_classification_ex.cpp)
+TARGET_LINK_LIBRARIES(multiclass_classification_ex_2 dlib)
+
 
 #Change this line to proper directory
-include_directories(/home/ytobah/simple_apx_app/inc/BookKeeping /home/ytobah/simple_apx_app/inc/OperatorHeaders)  #adding the include folder
+
+
+
+
+
+
+include(../dlib/cmake)
+#Change this line to proper directory
+include_directories(~/behzad_local/simple_apx_app/inc/BookKeeping ~/behzad_local/simple_apx_app/inc/OperatorHeaders)  #adding the include folder
 
 
 
@@ -19,7 +36,7 @@ include_directories(/home/ytobah/simple_apx_app/inc/BookKeeping /home/ytobah/sim
 # statement which takes the name of the output executable and then a list of
 # .cpp files to compile.  Here each example consists of only one .cpp file but
 # in general you will make programs that const of many .cpp files.
-ADD_EXECUTABLE(assignment_learning_ex assignment_learning_ex.cpp)
+ADD_EXECUTABLE(assignment_learning_ex ${all_src2} ${all_src3} assignment_learning_ex.cpp)
 # Then we tell it to link with dlib.
 TARGET_LINK_LIBRARIES(assignment_learning_ex dlib)
 
@@ -158,23 +175,4 @@ endif()
 
 
 
-set_property(GLOBAL PROPERTY RULE_MESSAGES OFF)
-cmake_minimum_required(VERSION 2.8)
-
-add_definitions(-std=c++11 -g) #to add the -std=c++11 flag 
-project(app_project)
-
-#Change the following 3 lines to proper directories
-file(GLOB all_src1 "../../simple_apx_app/src/CSrc/*.cpp")
-file(GLOB all_src2 "../../simple_apx_app/src/Operators/*.cpp")
-file(GLOB all_src3  "../../simple_apx_app/src/BookKeeping/*.cpp") #includes all the files in the folder src/
-add_executable(svm_c_ex_2 ${all_src1} ${all_src2} ${all_src3} svm_c_ex.cpp) #which files to build
-#install(TARGETS tool_exe DESTINATION bin) #where to place the binary
- TARGET_LINK_LIBRARIES(svm_c_ex_2 dlib )
-add_executable(multiclass_classification_ex_2 ${all_src1} ${all_src2} ${all_src3} multiclass_classification_ex.cpp)
-TARGET_LINK_LIBRARIES(multiclass_classification_ex_2 dlib)
-
-
-#Change this line to proper directory
-include_directories(../../simple_apx_app/inc/BookKeeping ../../simple_apx_app/inc/OperatorHeaders)  #adding the include folder
 
