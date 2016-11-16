@@ -841,7 +841,14 @@ namespace dlib
         ) const
         {
             typedef vector<typename vect_promote<T,U>::type,2> ret_type;
-            return ret_type(x()/val, y()/val);
+            return ret_type(x()/val, y()/val); //ORIG
+            
+        printf ("x(): ");
+        cout << typeid(x()).name() << endl;
+        printf ("y(): ");
+        cout << typeid(y()).name() << endl;
+        printf ("val: ");
+        cout << typeid(val).name() << endl;
         }
 
         // ---------------------------------------

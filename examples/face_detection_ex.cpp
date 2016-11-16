@@ -45,13 +45,50 @@
 using namespace dlib;
 using namespace std;
 
+
+//copy paste the following lines: start here
+#include <fstream>
+#include "assert.h"
+#include "Operators.h"
+#include "operatorFile_parser.h"
+#include "setSubType.h"
+#include "operandFile_parser.h"
+#include "globals.h"
+//#include "foo.h"
+using namespace std;
+extern hw_ac **myOp;   
+//end here
+
+
 // ----------------------------------------------------------------------------------------
 
-int main(int argc, char** argv)
-{  
+//int main(int argc, char** argv)
+//{  
+int main(int argc, char* argv[]){
+//    cout<< "test" << argc <<endl;
+    string resultFolderName; 
+    string resultFileName; 
+    string operatorFileName;
+    if (argc < 4) {
+        cout<< "provide the name of the file that you want the result to be written to"<<endl;
+        cout<< "Example: resultFolderName.txt resultFile.txt operatorFile.txt"<<endl; 
+        return 0; 
+    }else{
+        cout << "argv[2] " << argv[2] << endl;
+        resultFolderName= argv[2]; 
+        resultFileName = argv[3]; 
+        operatorFileName = argv[4]; 
+    }
+    assign_global_variables(resultFolderName, operatorFileName);
+    string resultFileNameCompleteAddress = resultFileName;
+    ofstream resultFile;
+    resultFile.open(resultFileNameCompleteAddress.c_str(), ios_base::app);
+    resultFile<<"*****************start******"<<endl; 
+    //end here
+
     try
     {
-        if (argc == 1)
+        if (argc < 5)
         {
             cout << "Give some image files as arguments to this program." << endl;
             return 0;
@@ -61,9 +98,11 @@ int main(int argc, char** argv)
         image_window win;
 
         // Loop over all the images provided on the command line.
-        for (int i = 1; i < argc; ++i)
+        for (int i = 1; i < (argc - 3); ++i)
         {
+           // printf("HERE1\n");
             cout << "processing image " << argv[i] << endl;
+           // printf("HERE2\n");
             array2d<unsigned char> img;
             load_image(img, argv[i]);
             // Make the image bigger by a factor of two.  This is useful since

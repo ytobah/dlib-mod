@@ -278,9 +278,9 @@ namespace dlib
                     else
                     {
                         ++num_p_free;
-                       // sum_p_free += df(i); //ORIG
+//                        sum_p_free += df(i); //ORIG
 
-                        sum_p_free  = myOp[8]->calc(sum_p_free,df(i)); //Addition
+                        sum_p_free  = myOp[58]->calc(sum_p_free,df(i)); //Addition
 
                         
                     }
@@ -301,9 +301,9 @@ namespace dlib
                     {
                         ++num_n_free;
                         
-//                        sum_n_free += df(i); //ORIG
+                     //   sum_n_free += df(i); //ORIG
                     //    cout << typeid(sum_n_free).name() << endl;
-                        sum_n_free = myOp[7]->calc(sum_n_free,df(i)); //Addition
+                        sum_n_free = myOp[57]->calc(sum_n_free,df(i)); //Addition
 
                     }
                 }
@@ -326,7 +326,7 @@ namespace dlib
                 b = 1/b;
    //             printf("b: %f\n",b);
     //            printf("num_p_free: %d\n",num_p_free);
-                r1 = myOp[0]->calc(a,b); //Multiplication
+                r1 = myOp[50]->calc(a,b); //Multiplication
      //           printf("r1: %f\n",r1);
 
                 }
@@ -339,7 +339,7 @@ namespace dlib
                // printf("lower_bound_p is: ");
                // cout << typeid(lower_bound_p).name() << endl;
                  
-                r1 = myOp[1]->calc(upper_bound_p,lower_bound_p); //Addition
+                r1 = myOp[51]->calc(upper_bound_p,lower_bound_p); //Addition
                 r1 = r1/2;
 
                 
@@ -347,7 +347,7 @@ namespace dlib
 
             }
             if(num_n_free > 0){
-                r2 = sum_n_free/num_n_free; //ORIG
+//                r2 = sum_n_free/num_n_free; //ORIG
 //                printf("r2: %f\n",r2); 
 
 //                printf("sum_n_free is: ");
@@ -360,34 +360,34 @@ namespace dlib
                  double a = sum_n_free;
                  double b = num_n_free;
                  b = 1/b;
-                 r2 = myOp[2]->calc(a,b); //Multiplication (division)
+                 r2 = myOp[52]->calc(a,b); //Multiplication (division)
                 //printf("r2: %f\n",r2);
 
 
             }
             else{
-                //r2 = (upper_bound_n+lower_bound_n)/2; //ORIG
-                r2 = myOp[3]->calc(upper_bound_n,lower_bound_n); //Addition
+//                r2 = (upper_bound_n+lower_bound_n)/2; //ORIG
+                r2 = myOp[53]->calc(upper_bound_n,lower_bound_n); //Addition
                 r2 = r2/2;
             }
 
            // rho = (r1+r2)/2; //ORIG
-            rho = myOp[4]->calc(r1,r2); //Addition
+            rho = myOp[54]->calc(r1,r2); //Addition
             rho = rho/2;
             
 
-            b = (r1-r2)/2/rho; //ORIG
+ //           b = (r1-r2)/2/rho; //ORIG
  //           printf("b: %f\n",b);
             double dbtmp = r2*-1;
-          //  b = (r1 + dbtmp)/2;
-           // dbtmp = 1/rho;
-           // b = b*dbtmp;
+    //        b = (r1 + dbtmp)/2;
+   //         dbtmp = 1/rho;
+  //          b = b*dbtmp;
            // printf("b: %f\n",b);
-            b = myOp[5]->calc(r1, dbtmp); //Addition      (subtraction)
+            b = myOp[55]->calc(r1, dbtmp); //Addition      (subtraction)
             b = b/2;
             dbtmp = rho;
             dbtmp = 1/rho;
-            b = myOp[6]->calc(b,dbtmp); //Multiplication (division)
+            b = myOp[56]->calc(b,dbtmp); //Multiplication (division)
 //            printf("b: %f\n",b);
 
             

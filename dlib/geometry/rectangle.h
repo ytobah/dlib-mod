@@ -11,6 +11,18 @@
 #include "vector.h"
 #include "../image_processing/generic_image.h"
 
+//copy paste the following lines: start here
+#include <fstream>
+#include "Operators.h"
+#include "operatorFile_parser.h"
+#include "setSubType.h"
+#include "operandFile_parser.h"
+#include "globals.h"
+//#include "foo.h"
+extern hw_ac **myOp;   
+// end here
+
+
 namespace dlib
 {
 
@@ -368,10 +380,42 @@ namespace dlib
     )
     {
         rectangle result;
-        result.set_left ( x - static_cast<long>(width) / 2 );
-        result.set_top ( y - static_cast<long>(height) / 2 );
-        result.set_right ( result.left() + width - 1 );
-        result.set_bottom ( result.top() + height - 1 );
+        //result.set_left ( x - static_cast<long>(width) / 2 ); //ORIG
+
+           // printf("static_cast<long>(width): ");
+           // cout << typeid(static_cast<long>(width)).name() << endl;    
+           // printf("x: ");
+           // cout << typeid(x).name() << endl;
+           
+            long lngtmp = ((static_cast<long>(width)) * (-1))/2;
+            lngtmp = myOp[1]->calc(x, lngtmp); //Addition (subtraction)
+            result.set_left (lngtmp);
+
+        //result.set_top ( y - static_cast<long>(height) / 2 ); //ORIG
+
+        lngtmp = ((static_cast<long>(height))*(-1))/2;
+        lngtmp = myOp[2]->calc(y, lngtmp); //Addition (subtraction)
+        result.set_top (lngtmp);
+
+
+//           printf("width: ");
+//           cout << typeid(width).name() << endl;
+//           printf("result.left(): ");
+//           cout << typeid(result.left()).name()<<endl;
+
+        result.set_right ( result.left() + width - 1 );  //ORIG
+         unsigned long ulng = result.left();
+ //        ulng = myOp[3]->calc(ulng ,width); //Addition
+         ulng -= 1;
+//         result.set_right(ulng);
+
+        result.set_bottom ( result.top() + height - 1 ); //ORIG
+        ulng = result.top();
+       // ulng = myOp[4]->calc(ulng, height); //Addition
+        ulng -= 1; 
+      //  result.set_bottom (ulng);
+
+        
         return result;
     }
 

@@ -5,7 +5,7 @@
     three classes and show you how to train a multiclass classifier to recognize 
     these three classes.
 
-    The classes are as follows:
+    The classes are as follows        cout << "Series of custom tests: " << endl;:
         - class 1: points very close to the origin
         - class 2: points on the circle of radius 10 around the origin
         - class 3: points that are on a circle of radius 4 but not around the origin at all
@@ -65,6 +65,10 @@ int main(int argc, char* argv[]){
     string resultFolderName; 
     string resultFileName; 
     string operatorFileName;
+    string testdataFileName;
+    std::ifstream inflile("multi_data.txt");
+    std::ifstream labelfile("multi_label.txt");
+    sample_type input;
     if (argc < 4) {
         cout<< "provide the name of the file that you want the result to be written to"<<endl;
         cout<< "Example: resultFolderName.txt resultFile.txt operatorFile.txt"<<endl; 
@@ -73,6 +77,7 @@ int main(int argc, char* argv[]){
         resultFolderName= argv[1]; 
         resultFileName = argv[2]; 
         operatorFileName = argv[3]; 
+        testdataFileName = argv[4];
     }
     assign_global_variables(resultFolderName, operatorFileName);
     string resultFileNameCompleteAddress = resultFileName;
@@ -165,6 +170,29 @@ int main(int argc, char* argv[]){
             predicted label: 1, true label: 1
         */
 
+        //TEST SAMPLES
+        
+        std::ifstream infile(testdataFileName);
+      //  std::ifstream infile("multi_data.txt");
+     //   std::ifstream labelfile("multi_label.txt");
+        double a;
+        double b;
+        double c;
+        std::vector<sample_type> samp_test;
+        std::vector<double> label_test;
+
+
+        while (infile >> a >> b >> c){
+          input(0) = a;
+          input(1) = b; 
+          samp_test.push_back(input);
+          label_test.push_back(c);
+        }
+
+        
+        cout << "\nCUSTOM TEST: " << endl;
+        cout << "cross validation: \n" << cross_validate_multiclass_trainer(trainer, samp_test, label_test, 5) << endl;
+        //END OF TEST
 
         // If you want to save a one_vs_one_decision_function to disk, you can do
         // so.  However, you must declare what kind of decision functions it contains. 

@@ -21,6 +21,7 @@
 
 #include <iostream>
 #include <dlib/svm.h>
+#include <stdlib.h>
 
 using namespace std;
 using namespace dlib;
@@ -51,6 +52,14 @@ int main(int argc, char* argv[]){
     string resultFolderName; 
     string resultFileName; 
     string operatorFileName;
+    string testdataFileName;
+//    std::ifstream infile("svm_data.txt");
+    float a;
+    float b;
+    char inputChar[2];
+    double inputX[100];
+    double inputY[100];
+    int i=0;
     if (argc < 4) {
         cout<< "provide the name of the file that you want the result to be written to"<<endl;
         cout<< "Example: resultFolderName.txt resultFile.txt operatorFile.txt"<<endl; 
@@ -59,6 +68,18 @@ int main(int argc, char* argv[]){
         resultFolderName= argv[1]; 
         resultFileName = argv[2]; 
         operatorFileName = argv[3]; 
+        testdataFileName = argv[4];
+       // while (infile >> a >> b){
+        //   inputX[i] = a;
+         //  inputY[i] = b; 
+          // i++;         
+       // }
+        printf("%f\n", inputX[0]);
+        printf("%f\n", inputY[0]);
+     //  input[0] = atof(argv[4]);
+     //   printf("%f\n", input[0]);
+     //   input[1] = atof(argv[5]);
+     //   printf("%f\n", input[1]);
     }
     assign_global_variables(resultFolderName, operatorFileName);
     string resultFileNameCompleteAddress = resultFileName;
@@ -168,7 +189,7 @@ int main(int argc, char* argv[]){
     // for examples of more sophisticated strategies for determining good
     // parameter choices.
     cout << "doing cross validation" << endl;
-    for (double gamma = 0.00001; gamma <= 1; gamma *= 5)
+    for (double gamma = 0.00001; gamma <=0 ; gamma *= 5)
     {
         for (double C = 1; C < 100000; C *= 5)
         {
@@ -232,6 +253,55 @@ int main(int argc, char* argv[]){
     cout << "This is a -1 class example, the classifier output is " << learned_function(sample) << endl;
 
 
+
+//TEST DATA
+  //  for(int k=0; k<50; k++){
+   // sample(0) = inputX[k];
+    //sample(1) = inputY[k];
+   // cout << "This is a custom sample, (+1 class, sample #" << k << "), the classifier output is " << learned_function(sample) << endl;
+   // }
+
+
+//    for(int k=50; k<100; k++){
+//    sample(0) = inputX[k];
+//    sample(1) = inputY[k];
+//    cout << "This is a custom sample, (-1 class, sample #" << k << "), the classifier output is " << learned_function(sample) << endl;
+//    }
+//
+
+        std::ifstream infile(testdataFileName);
+      //  std::ifstream infile("multi_data.txt");
+     //   std::ifstream labelfile("multi_label.txt");
+        double x;
+        double y;
+        double z;
+        sample_type input;
+        std::vector<sample_type> samp_test;
+        std::vector<double> label_test;
+
+        int k = 0;
+       // while (k < 99){
+        while (infile >> x >> y >> z){
+          printf("INFILE1\n");
+          input(0) = x;
+          input(1) = y; 
+          samp_test.push_back(input);
+          label_test.push_back(z);
+          printf("%d\n",k);
+          k++;
+          printf("INFILE\n");
+        }
+//        }
+        printf("DONE\n");
+
+
+        cout << "Test data accuracy: " << cross_validate_trainer(trainer, samp_test, label_test, 3); 
+
+
+    //END OF TEST
+
+
+
     // We can also train a decision function that reports a well conditioned
     // probability instead of just a number > 0 for the +1 class and < 0 for the
     // -1 class.  An example of doing that follows:
@@ -268,8 +338,19 @@ int main(int argc, char* argv[]){
     cout << "This -1 class example should have low probability.  Its probability is: " 
          << learned_pfunct(sample) << endl;
 
+//    for(int k=0; k < 50; k++){
+//    sample(0) = inputX[k];
+//    sample(1) = inputY[k];
+//    cout << "This is a custom sample, (+1 class, sample #" << k << "), and should have high probability. The probability is: " << learned_pfunct(sample) << endl;
+//    }
+//
 
-
+//    for(int k=50; k < 100; k++){
+//    sample(0) = inputX[k];
+//    sample(1) = inputY[k];
+//    cout << "This is a custom sample, (-1 class, sample #" << k << "), and should have low probability. The probablity is: " << learned_pfunct(sample) << endl;
+//    }
+//
     // Another thing that is worth knowing is that just about everything in dlib
     // is serializable.  So for example, you can save the learned_pfunct object
     // to disk and recall it later like so:

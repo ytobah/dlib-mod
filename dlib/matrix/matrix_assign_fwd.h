@@ -163,8 +163,8 @@ namespace dlib
                 {
                     for (long c = 0; c < src.nc(); ++c)
                     {
-                    //    dest(r,c) += src(r,c); //ORIG
-                        dest(r,c) = myOp[9]->calc(dest(r,c),src(r,c)); //Addition
+ //                       dest(r,c) += src(r,c); //ORIG
+                        dest(r,c) = myOp[59]->calc(dest(r,c),src(r,c)); //Addition
                     }
                 }
             }
@@ -174,7 +174,7 @@ namespace dlib
                 {
                     for (long c = 0; c < src.nc(); ++c)
                     {
-                        dest(r,c) -= src(r,c); //ORIG
+//                        dest(r,c) -= src(r,c); //ORIG
                        
                     //   printf("src(r,c) is: ");
                     //   cout << typeid(src(r,c)).name() << endl;
@@ -182,7 +182,7 @@ namespace dlib
                     //   cout << typeid(dest(r,c)).name() << endl;
                     
                          double tmp1 = src(r,c)*-1;
-                        // dest(r,c) = myOp[10]->calc(dest(r,c),tmp1); //Addition (subtraction)
+                        dest(r,c) = myOp[60]->calc(dest(r,c),tmp1); //Addition (subtraction)
 
                     }
                 }
@@ -193,10 +193,10 @@ namespace dlib
                 {
                     for (long c = 0; c < src.nc(); ++c)
                     {
-                        dest(r,c) += alpha*src(r,c); //ORIG
+                //        dest(r,c) += alpha*src(r,c); //ORIG
                         
-                      //  double tmp2 = myOp[11]->calc(alpha,src(r,c)); //Multiplication
-                      //  dest(r,c) = myOp[12]->calc(dest(r,c),tmp2);  //Addition
+                        double tmp2 = myOp[61]->calc(alpha,src(r,c)); //Multiplication
+                        dest(r,c) = myOp[62]->calc(dest(r,c),tmp2);  //Addition
                     }
                 }
             }
@@ -219,8 +219,8 @@ namespace dlib
                 {
                     for (long c = 0; c < src.nc(); ++c)
                     {
-                        dest(r,c) = alpha*src(r,c);//ORIG
-//                        dest(r,c) = myOp[13]->calc(alpha,src(r,c)); //Multiplication
+                       //dest(r,c) = alpha*src(r,c);//ORIG
+                        dest(r,c) = myOp[63]->calc(alpha,src(r,c)); //Multiplication
 
 
                     }

@@ -9,6 +9,20 @@
 #include "box_overlap_testing.h"
 #include "full_object_detection.h"
 
+
+//copy paste the following lines: start here
+#include <fstream>
+#include "Operators.h"
+#include "operatorFile_parser.h"
+#include "setSubType.h"
+#include "operandFile_parser.h"
+#include "globals.h"
+//#include "foo.h"
+extern hw_ac **myOp;   
+// end here
+
+
+
 namespace dlib
 {
 
@@ -436,7 +450,16 @@ namespace dlib
         for (unsigned long i = 0; i < w.size(); ++i)
         {
             const double thresh = w[i].w(scanner.get_num_dimensions());
-            scanner.detect(w[i].get_detect_argument(), dets, thresh + adjust_threshold);
+            scanner.detect(w[i].get_detect_argument(), dets, thresh + adjust_threshold); //ORIG
+
+//            printf("adjust_threshold: ");
+//            cout << typeid(adjust_threshold).name() << endl;
+//            printf("thresh: ");
+//            cout << typeid(thresh).name() << endl;
+            double dbtmp = myOp[0]->calc(thresh, adjust_threshold);  //Addition
+            scanner.detect(w[i].get_detect_argument(), dets, dbtmp);
+            
+
             for (unsigned long j = 0; j < dets.size(); ++j)
             {
                 rect_detection temp;

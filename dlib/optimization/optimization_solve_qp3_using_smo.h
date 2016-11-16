@@ -141,22 +141,22 @@ namespace dlib
                 optimize_working_pair(alpha,Q,y,df,tau,i,j, Cp, Cn );
 
                 // update the df vector now that we have modified alpha(i) and alpha(j)
-                //  scalar_type delta_alpha_i = alpha(i) - old_alpha_i;   //ORIG
+           //       scalar_type delta_alpha_i = alpha(i) - old_alpha_i;   //ORIG (clean)
                
                   //cout << typeid(old_alpha_i).name() << endl;
               
                 double a = alpha(i);
                 double b = (-1)*old_alpha_i;
-//                printf("Op0");
+             //   printf("Op0");
                   scalar_type delta_alpha_i = myOp[0]->calc(a,b);   //Addition (subtraction)
                 
 
 
-//                scalar_type delta_alpha_j = alpha(j) - old_alpha_j; //ORIG
+  //              scalar_type delta_alpha_j = alpha(j) - old_alpha_j; //ORIG (clean)
                 a = alpha(j);
                 b = (-1)*old_alpha_j;
 //                printf("Op1\n");
-                scalar_type delta_alpha_j = myOp[1]->calc(a,b);    //Addition(subtraction)
+                 scalar_type delta_alpha_j = myOp[1]->calc(a,b);    //Addition(subtraction)
 
 
 
@@ -442,7 +442,7 @@ namespace dlib
                 scalar_type delta = (-df(i)-df(j))/quad_coef;
 
 
-//                  scalar_type diff = alpha(i) - alpha(j);  //ORIG 
+//                  scalar_type diff = alpha(i) - alpha(j);  //ORIG (clean) 
 //                printf("alpha(i) is: ");
 //                cout << typeid(alpha(i)).name() << endl;
 //                printf("alpha(j) is: ");
@@ -455,10 +455,10 @@ namespace dlib
               //  printf("Op6\n");
                   scalar_type diff = myOp[6]->calc(a,b); //Addition (subtraction)
 
- //                 alpha(i) += delta; //ORIG
+//                  alpha(i) += delta; //ORIG (clean)
                // printf("Op7\n");
                   alpha(i) = myOp[7]->calc(alpha(i),delta); //Addition
-          //        alpha(j) += delta; //ORIG
+ //                 alpha(j) += delta; //ORIG (clean)
                // printf("Op8\n");
                   alpha(j) = myOp[8]->calc(alpha(j),delta); //Addition
 
@@ -483,11 +483,11 @@ namespace dlib
                         
                     
                         
-                       // alpha(j) = -diff; //ORIG
+                       alpha(j) = -diff; //ORIG
                        a = alpha(j);
                        b = diff*-1;
                        
-                      alpha(j) = myOp[9]->calc(a,b);  //Addition (subtraction)
+//                      alpha(j) = myOp[9]->calc(a,b);  //Addition (subtraction) INCORRECT
                     }
                 }
 
@@ -508,7 +508,7 @@ namespace dlib
                     if (alpha(j) > Cj)
                     {
                         alpha(j) = Cj;
-                      //  alpha(i) = Cj + diff; //ORIG
+//                        alpha(i) = Cj + diff; //ORIG
                         
                         alpha(i) = myOp[11]->calc(Cj, diff); //Addition
 
@@ -517,7 +517,7 @@ namespace dlib
             }
             else
             {
-            //    scalar_type quad_coef = Q(i,i)+Q(j,j)-2*Q(j,i); //ORIG
+       //        scalar_type quad_coef = Q(i,i)+Q(j,j)-2*Q(j,i); //ORIG (clean)
              
              //       printf("Q(i,i) is: ");
              //       cout << typeid(Q(i,i)).name() << endl;                    
@@ -538,27 +538,28 @@ namespace dlib
                 
                
 
-              //  scalar_type delta = (df(i)-df(j))/quad_coef; //ORIG
+               // scalar_type delta = (df(i)-df(j))/quad_coef; //ORIG (clean)
                 
                 double a = df(i);
                 double b = df(j)*-1;
                 a = myOp[14]->calc(a,b); //Addition (subtraction)
                 
-                b = 1/quad_coef;
-                scalar_type delta = myOp[15]->calc(a,b); // Multiplication (division);
-                
+                b = quad_coef;
+                b = 1/b;
+             //   scalar_type delta = myOp[15]->calc(a,b); // Multiplication (division);
+                  scalar_type delta = (a)/quad_coef;  
                 
 
 
-                //scalar_type sum = alpha(i) + alpha(j);  //ORIG
+//                scalar_type sum = alpha(i) + alpha(j);  //ORIG (clean)
                 scalar_type sum = myOp[16]->calc(alpha(i),alpha(j)); //Addition
 
 
-              //  alpha(i) -= delta; //ORIG
+               // alpha(i) -= delta; //ORIG (clean)
                 b = delta * -1;
-                alpha(i) = myOp[17] ->calc(alpha(i),b); //Addition (subtraction)
+                alpha(i) = myOp[17]->calc(alpha(i),b); //Addition (subtraction)
 
-                //alpha(j) += delta; //ORIG
+              //  alpha(j) += delta; //ORIG (clean)
                 alpha(j) = myOp[18]->calc(alpha(j),delta); //Addition
                 
 
@@ -567,7 +568,7 @@ namespace dlib
                     if(alpha(i) > Ci)
                     {
                         alpha(i) = Ci;
-                        //alpha(j) = sum - Ci; //ORIG
+                      //  alpha(j) = sum - Ci; //ORIG
                         b = Ci * -1;
                         alpha(j) = myOp[19]->calc(sum, b); //Addition (subtraction)
                         
@@ -589,7 +590,7 @@ namespace dlib
                     if(alpha(j) > Cj)
                     {
                         alpha(j) = Cj;
-                       // alpha(i) = sum - Cj;//ORIG 
+                   //     alpha(i) = sum - Cj;//ORIG 
                         b = Cj * -1;
                         alpha(i) = myOp[20]->calc(sum, b); //Addition (subtraction)
                     }

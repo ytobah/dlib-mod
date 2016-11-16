@@ -9,6 +9,14 @@ cmake_minimum_required(VERSION 2.8.4)
 
 PROJECT(examples)
 
+#SET(GCC_COVERAGE_COMPILE_FLAGS "-pg")
+#add_definitions(${GCC_COVERAGE_COMPILE_FLAGS})
+
+#add_definitions(-pg)
+
+set(CMAKE_CXX_FLAGS  "-pg")
+add_executable(gmon_test gmontest.cpp)
+
 include_directories(../../simple_apx_app/inc/BookKeeping ../../simple_apx_app/inc/OperatorHeaders)  #adding the include folder
 file(GLOB all_src2 "../../simple_apx_app/src/Operators/*.cpp")
 file(GLOB all_src3  "../../simple_apx_app/src/BookKeeping/*.cpp") #includes all the files in the folder src/
@@ -17,6 +25,10 @@ add_executable(svm_c_ex_2 ${all_src2} ${all_src3} svm_c_ex.cpp) #which files to 
 TARGET_LINK_LIBRARIES(svm_c_ex_2 dlib )
 add_executable(multiclass_classification_ex_2 ${all_src2} ${all_src3} multiclass_classification_ex.cpp)
 TARGET_LINK_LIBRARIES(multiclass_classification_ex_2 dlib)
+add_executable(gendata_multi gendata_multi.cpp)
+TARGET_LINK_LIBRARIES(gendata_multi dlib)
+add_executable(gendata_svm gendata_svm.cpp)
+TARGET_LINK_LIBRARIES(gendata_svm dlib)
 
 
 #Change this line to proper directory
@@ -70,8 +82,8 @@ if (COMPILER_CAN_DO_CPP_11)
 endif()
 
 
-SET(GCC_COVERAGE_COMPILE_FLAGS "-std=c++11")
-add_definitions(${GCC_COVERAGE_COMPILE_FLAGS})
+#SET(GCC_COVERAGE_COMPILE_FLAGS "-std=c++11 -")
+#add_definitions(${GCC_COVERAGE_COMPILE_FLAGS})
 
 #
 #here we apply our macros 

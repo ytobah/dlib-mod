@@ -1178,7 +1178,10 @@ namespace dlib
         // There is a one pixel border around the image.
         p -= point(1,1);
         // There is also a 1 "cell" border around the HOG image formation.
-        return p/cell_size - point(1,1) + point((filter_cols_padding-1)/2,(filter_rows_padding-1)/2);
+        return p/cell_size - point(1,1) + point((filter_cols_padding-1)/2,(filter_rows_padding-1)/2);//ORIG
+       // printf ("filter_cols_padding: ");
+       // cout << typeid(filter_cols_padding).name() << endl;
+        
     }
 
 // ----------------------------------------------------------------------------------------

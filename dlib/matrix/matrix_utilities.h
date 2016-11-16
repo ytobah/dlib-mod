@@ -19,19 +19,6 @@
 #include "../general_hash/random_hashing.h"
 #include "matrix_mat.h"
 
-//copy paste the following lines: start here
-#include <fstream>
-
-#include "Operators.h"
-#include "operatorFile_parser.h"
-#include "setSubType.h"
-#include "operandFile_parser.h"
-#include "globals.h"
-//#include "foo.h"
-//#include "../simple.h"
-extern hw_ac **myOp;   
-// end here
-
 
 namespace dlib
 {
@@ -2434,14 +2421,10 @@ namespace dlib
 
         typedef typename impl::compatible<typename M1::type, typename M2::type>::type type;
         typedef const type const_ret_type;
-        const static long cost = M1::cost + M2::cost + 1;  //Addition OP (x2)
-//        const static long cost = (myOp[0]->calc(M1::cost,M2::cost))+1; //Addition //ORIG
-        //const static long cost = myOp[1]->calc(costdummy, 1);     //Addition                      
-        //const static long cost;
-        //cost = costdummy2;
+        const static long cost = M1::cost + M2::cost + 1;										   //Addition OP (x2)
+
         const_ret_type apply ( long r, long c) const
-        { return this->m1(r,c)*this->m2(r,c); }            //MultiplicationOP //ORIG
-       // {return myOp[2]->calc(this->m1(r,c),this->m2(r,c));}
+        { return this->m1(r,c)*this->m2(r,c); }                                                    //Multiplication Op 
     };
 
     template <
